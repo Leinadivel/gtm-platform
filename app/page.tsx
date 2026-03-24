@@ -1,4 +1,5 @@
 import Link from "next/link";
+import SiteHeader from "@/components/site-header";
 import {
   ArrowRight,
   BadgeCheck,
@@ -14,34 +15,17 @@ import {
   Users,
 } from "lucide-react";
 
+
 export default function Home() {
   return (
     <main className="min-h-screen bg-white text-gray-900">
-      {/* HERO */}
+      <SiteHeader />
       <section className="relative overflow-hidden border-b border-gray-100">
         <div className="absolute inset-0 bg-gradient-to-br from-blue-50 via-white to-orange-50" />
         <div className="absolute -left-20 top-24 h-72 w-72 rounded-full bg-blue-100/70 blur-3xl" />
         <div className="absolute -right-16 bottom-0 h-72 w-72 rounded-full bg-orange-100/60 blur-3xl" />
 
         <div className="relative mx-auto max-w-7xl px-6 py-8 sm:py-10">
-          {/* NAV */}
-          <div className="flex items-center justify-between">
-            <div>
-              <h1 className="text-lg font-semibold tracking-tight">GTM Platform</h1>
-              <p className="text-xs text-gray-500">Education, strategy, and execution in one system</p>
-            </div>
-
-            <div className="hidden items-center gap-3 md:flex">
-              <span className="rounded-full border border-blue-200 bg-white/80 px-3 py-1 text-xs font-medium text-blue-700">
-                GeniusNimble
-              </span>
-              <span className="rounded-full border border-orange-200 bg-white/80 px-3 py-1 text-xs font-medium text-orange-600">
-                AskGenim
-              </span>
-            </div>
-          </div>
-
-          {/* HERO CONTENT */}
           <div className="mt-16 grid items-center gap-10 lg:grid-cols-[1.15fr_0.85fr]">
             <div className="max-w-4xl">
               <div className="inline-flex items-center gap-2 rounded-full border border-blue-200 bg-white/90 px-3 py-1 text-xs font-semibold text-blue-700 shadow-sm">
