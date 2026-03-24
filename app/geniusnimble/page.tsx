@@ -1,17 +1,18 @@
 import Link from "next/link";
-import SiteHeader from "@/components/site-header";
-import SiteFooter from "@/components/site-footer";
 import {
   ArrowRight,
   BadgeCheck,
   Briefcase,
   CheckCircle2,
+  Crown,
   GraduationCap,
   Layers3,
   Sparkles,
   Target,
   Users,
 } from "lucide-react";
+import SiteHeader from "@/components/site-header";
+import SiteFooter from "@/components/site-footer";
 
 const features = [
   {
@@ -41,14 +42,93 @@ const outcomes = [
   "Create a strong path from training to recruitment",
 ];
 
+const individualPlans = [
+  {
+    name: "Starter",
+    price: "Free",
+    description:
+      "A strong starting point for individuals exploring GTM engineering and platform learning.",
+    icon: Sparkles,
+    featured: false,
+    accent: "blue",
+    features: [
+      "Access to selected learning content",
+      "Basic learning dashboard",
+      "Limited assessments",
+      "Community access",
+    ],
+    cta: "Start free",
+    href: "/register/individual",
+  },
+  {
+    name: "Pro",
+    price: "£19/mo",
+    description:
+      "Full access to structured GTM learning and measurable progress.",
+    icon: Crown,
+    featured: true,
+    accent: "orange",
+    features: [
+      "Full course access",
+      "All assessments",
+      "Progress tracking",
+      "Certificates",
+      "Priority learning updates",
+    ],
+    cta: "Choose Pro",
+    href: "/register/individual",
+  },
+  {
+    name: "Advanced",
+    price: "£39/mo",
+    description:
+      "For serious learners focused on deep capability and accelerated growth.",
+    icon: Briefcase,
+    featured: false,
+    accent: "blue",
+    features: [
+      "Everything in Pro",
+      "Advanced learning tracks",
+      "Exclusive content",
+      "Priority support",
+      "Future career opportunities access",
+    ],
+    cta: "Go Advanced",
+    href: "/register/individual",
+  },
+];
+
+function planStyles(accent: "blue" | "orange", featured?: boolean) {
+  if (accent === "orange") {
+    return {
+      icon: "bg-orange-100 text-orange-500",
+      border: featured
+        ? "border-orange-300 shadow-orange-100/70"
+        : "border-slate-200",
+      bg: "from-orange-50 via-white to-blue-50",
+      button: "bg-orange-500 hover:bg-orange-400 text-white",
+      badge: "bg-slate-900 text-white",
+    };
+  }
+
+  return {
+    icon: "bg-blue-100 text-blue-600",
+    border: "border-slate-200",
+    bg: "from-blue-50 via-white to-orange-50",
+    button: "bg-slate-900 hover:bg-slate-800 text-white",
+    badge: "bg-blue-100 text-blue-700",
+  };
+}
+
 export default function GeniusNimblePage() {
   return (
     <main className="min-h-screen bg-white text-slate-900">
       <SiteHeader showBackHome />
+
       <section className="relative overflow-hidden border-b border-slate-200">
         <div className="absolute inset-0 bg-gradient-to-br from-blue-50 via-white to-orange-50" />
         <div className="relative mx-auto max-w-7xl px-6 py-16 sm:py-20">
-          <div className="mt-14 grid items-center gap-12 lg:grid-cols-2">
+          <div className="mt-6 grid items-center gap-12 lg:grid-cols-2">
             <div className="max-w-2xl">
               <div className="inline-flex items-center gap-2 rounded-full border border-blue-200 bg-white px-4 py-2 text-sm text-blue-700 shadow-sm">
                 <Sparkles className="h-4 w-4" />
@@ -67,7 +147,7 @@ export default function GeniusNimblePage() {
 
               <div className="mt-8 flex flex-col gap-4 sm:flex-row">
                 <Link
-                  href="/login"
+                  href="/register/individual"
                   className="inline-flex items-center justify-center gap-2 rounded-xl bg-blue-600 px-6 py-3 font-semibold text-white transition hover:bg-blue-500"
                 >
                   Start Learning
@@ -75,10 +155,10 @@ export default function GeniusNimblePage() {
                 </Link>
 
                 <Link
-                  href="/courses"
+                  href="/pricing"
                   className="inline-flex items-center justify-center rounded-xl border border-slate-300 px-6 py-3 font-semibold text-slate-700 transition hover:bg-slate-50"
                 >
-                  View Courses
+                  View Pricing
                 </Link>
               </div>
 
@@ -249,6 +329,90 @@ export default function GeniusNimblePage() {
       </section>
 
       <section className="mx-auto max-w-7xl px-6 py-20">
+        <div className="mx-auto max-w-3xl text-center">
+          <p className="text-sm font-semibold uppercase tracking-[0.2em] text-blue-600">
+            Pricing
+          </p>
+          <h2 className="mt-4 text-3xl font-bold tracking-tight sm:text-4xl">
+            Choose the learning plan that matches your stage.
+          </h2>
+          <p className="mt-4 text-lg leading-8 text-slate-600">
+            Start free, grow with structure, and move into deeper capability as
+            your learning journey expands.
+          </p>
+        </div>
+
+        <div className="mt-12 grid gap-6 lg:grid-cols-3">
+          {individualPlans.map((plan) => {
+            const Icon = plan.icon;
+            const styles = planStyles(plan.accent as "blue" | "orange", plan.featured);
+
+            return (
+              <div
+                key={plan.name}
+                className={`relative overflow-hidden rounded-[32px] border bg-white p-8 shadow-xl transition hover:-translate-y-1 ${styles.border}`}
+              >
+                {plan.featured && (
+                  <div className={`absolute right-5 top-5 rounded-full px-3 py-1 text-xs font-semibold uppercase tracking-[0.16em] ${styles.badge}`}>
+                    Most popular
+                  </div>
+                )}
+
+                <div className={`absolute inset-0 bg-gradient-to-br ${styles.bg} opacity-80`} />
+                <div className="relative">
+                  <div className={`inline-flex rounded-2xl p-3 ${styles.icon}`}>
+                    <Icon className="h-6 w-6" />
+                  </div>
+
+                  <h3 className="mt-5 text-2xl font-bold">{plan.name}</h3>
+                  <p className="mt-3 text-sm leading-7 text-slate-600">
+                    {plan.description}
+                  </p>
+
+                  <div className="mt-8">
+                    <span className="text-4xl font-bold tracking-tight">
+                      {plan.price}
+                    </span>
+                  </div>
+
+                  <div className="mt-8 space-y-4">
+                    {plan.features.map((feature) => (
+                      <div key={feature} className="flex items-start gap-3">
+                        <div className="mt-0.5 rounded-full bg-white p-1 shadow-sm">
+                          <CheckCircle2 className="h-4 w-4 text-emerald-600" />
+                        </div>
+                        <p className="text-sm leading-6 text-slate-700">
+                          {feature}
+                        </p>
+                      </div>
+                    ))}
+                  </div>
+
+                  <Link
+                    href={plan.href}
+                    className={`mt-10 inline-flex w-full items-center justify-center gap-2 rounded-2xl px-5 py-3.5 text-sm font-semibold transition ${styles.button}`}
+                  >
+                    {plan.cta}
+                    <ArrowRight className="h-4 w-4" />
+                  </Link>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+
+        <div className="mt-8 text-center">
+          <Link
+            href="/pricing"
+            className="inline-flex items-center gap-2 text-sm font-semibold text-blue-600 hover:text-blue-700"
+          >
+            See full pricing details
+            <ArrowRight className="h-4 w-4" />
+          </Link>
+        </div>
+      </section>
+
+      <section className="mx-auto max-w-7xl px-6 py-20">
         <div className="rounded-[32px] bg-gradient-to-r from-blue-600 to-orange-500 p-8 text-white sm:p-10">
           <div className="max-w-3xl">
             <div className="inline-flex items-center gap-2 rounded-full bg-white/15 px-4 py-2 text-sm">
@@ -268,21 +432,22 @@ export default function GeniusNimblePage() {
 
             <div className="mt-8 flex flex-col gap-4 sm:flex-row">
               <Link
-                href="/login"
+                href="/register/individual"
                 className="inline-flex items-center justify-center rounded-xl bg-white px-6 py-3 font-semibold text-slate-900 transition hover:bg-slate-100"
               >
                 Join GeniusNimble
               </Link>
               <Link
-                href="/"
+                href="/pricing"
                 className="inline-flex items-center justify-center rounded-xl border border-white/30 px-6 py-3 font-semibold text-white transition hover:bg-white/10"
               >
-                Back to Main Platform
+                View Pricing
               </Link>
             </div>
           </div>
         </div>
       </section>
+
       <SiteFooter />
     </main>
   );
