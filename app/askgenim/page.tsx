@@ -1,5 +1,6 @@
 import Link from "next/link";
 import SiteHeader from "@/components/site-header";
+import SiteFooter from "@/components/site-footer";
 import {
   ArrowRight,
   BadgeCheck,
@@ -280,6 +281,7 @@ export default function AskGenimPage() {
           </div>
         </div>
       </section>
+      <SiteFooter />
     </main>
   );
 }

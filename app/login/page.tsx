@@ -107,7 +107,7 @@ export default function LoginPage() {
               </form>
 
               <div className="mt-6 flex items-center justify-between text-sm">
-                <Link href="#" className="text-slate-600 hover:text-slate-900">
+                <Link href="/forgot-password" className="text-slate-600 hover:text-slate-900">
                   Forgot password?
                 </Link>
                 <Link href="/register" className="font-medium text-blue-600 hover:text-blue-700">
