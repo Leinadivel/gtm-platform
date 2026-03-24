@@ -22,6 +22,12 @@ export default function SiteHeader({
             <Link href="/askgenim" className="transition hover:text-orange-500">
               AskGenim
             </Link>
+            <Link href="/contact" className="transition hover:text-green-500">
+              Contact
+            </Link>
+            <Link href="/services" className="transition hover:text-blue-500">
+              Services
+            </Link>
           </nav>
         </div>
 
