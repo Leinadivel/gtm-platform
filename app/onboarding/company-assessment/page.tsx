@@ -23,7 +23,7 @@ const companySizeOptions = [
   "26–50 staff",
   "51–100 staff",
   "100+ staff",
-];
+] as const;
 
 const teamExperienceOptions = [
   "Mostly beginners (0–1 year)",
@@ -31,7 +31,7 @@ const teamExperienceOptions = [
   "Mixed experience levels",
   "Mostly experienced team (3–5 years)",
   "Highly experienced team (5+ years)",
-];
+] as const;
 
 const primaryGoalOptions = [
   "Improve overall sales performance",
@@ -40,7 +40,7 @@ const primaryGoalOptions = [
   "Strengthen client communication",
   "Improve onboarding for new team members",
   "Develop stronger sales leadership",
-];
+] as const;
 
 const priorityCategoryOptions = [
   "Sales",
@@ -49,7 +49,7 @@ const priorityCategoryOptions = [
   "Communication",
   "Customer Success",
   "Leadership",
-];
+] as const;
 
 const challengeAreas = [
   "Prospecting and pipeline generation",
@@ -58,7 +58,7 @@ const challengeAreas = [
   "Client retention and account expansion",
   "Team communication and consistency",
   "Leadership and team coaching",
-];
+] as const;
 
 const outcomes = [
   {
@@ -105,32 +105,32 @@ export default function CompanyAssessmentPage() {
 
               <p className="mt-6 max-w-2xl text-lg leading-8 text-slate-600">
                 Before your team begins, answer a few short questions so Genim
-                can understand your company’s goals, your team’s experience
-                level, and the areas where support is needed most.
+                can understand your company goals, team experience level, and
+                the areas where support is needed most.
               </p>
 
               <div className="mt-8 grid gap-3 sm:grid-cols-1 md:max-w-2xl">
                 <div className="flex items-start gap-3 rounded-2xl border border-slate-200 bg-white p-4 shadow-sm">
                   <CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0 text-emerald-600" />
                   <p className="text-sm leading-6 text-slate-700">
-                    Your company will not be pushed into a one-size-fits-all
-                    starting path if your staff already have experience.
+                    Your company will not be forced into a one-size-fits-all
+                    path if your staff already have meaningful experience.
                   </p>
                 </div>
 
                 <div className="flex items-start gap-3 rounded-2xl border border-slate-200 bg-white p-4 shadow-sm">
                   <CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0 text-emerald-600" />
                   <p className="text-sm leading-6 text-slate-700">
-                    Your answers will help Genim recommend the right category
-                    focus and the best first courses for your team.
+                    Your answers help Genim recommend the right category focus
+                    and first courses for team rollout.
                   </p>
                 </div>
 
                 <div className="flex items-start gap-3 rounded-2xl border border-slate-200 bg-white p-4 shadow-sm">
                   <CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0 text-emerald-600" />
                   <p className="text-sm leading-6 text-slate-700">
-                    This helps you launch learning more efficiently and focus on
-                    the areas that matter most to the business.
+                    This reduces wasted learning time and improves rollout
+                    quality from the start.
                   </p>
                 </div>
               </div>
@@ -165,12 +165,13 @@ export default function CompanyAssessmentPage() {
                       What happens next
                     </p>
                     <h2 className="mt-2 text-2xl font-bold tracking-tight text-slate-950">
-                      Genim will use your answers to shape your team’s starting point
+                      Genim will use your answers to shape your team’s starting
+                      point
                     </h2>
                     <p className="mt-3 text-sm leading-7 text-slate-600">
-                      After you complete this assessment, the platform can
-                      recommend a primary focus category and 2 to 3 courses for
-                      your team to begin with first.
+                      After this assessment, the platform can recommend a
+                      primary focus category and 2 to 3 starting courses for
+                      your team.
                     </p>
                   </div>
                 </div>
@@ -212,7 +213,11 @@ export default function CompanyAssessmentPage() {
                 </div>
 
                 <div className="p-6 sm:p-8">
-                  <form className="space-y-8">
+                  <form
+                    action="/onboarding/company-recommendation"
+                    method="GET"
+                    className="space-y-8"
+                  >
                     <section className="space-y-5">
                       <div>
                         <h3 className="text-lg font-semibold text-slate-950">
@@ -238,6 +243,7 @@ export default function CompanyAssessmentPage() {
                             id="companyType"
                             name="companyType"
                             type="text"
+                            autoComplete="organization"
                             placeholder="e.g. SaaS, Real Estate, Finance, Retail"
                             className="w-full rounded-2xl border border-slate-300 bg-white py-3 pl-11 pr-4 text-sm outline-none transition placeholder:text-slate-400 focus:border-orange-400 focus:ring-4 focus:ring-orange-100"
                             required
@@ -409,7 +415,7 @@ export default function CompanyAssessmentPage() {
                       <div className="flex items-start gap-3">
                         <Users className="mt-0.5 h-4 w-4 shrink-0 text-orange-500" />
                         <p className="text-sm leading-6 text-slate-700">
-                          After submission, Genim can recommend a starting
+                          After submission, Genim will recommend a starting
                           category and 2 to 3 priority courses for your team to
                           begin with.
                         </p>
@@ -436,9 +442,10 @@ export default function CompanyAssessmentPage() {
 
                   <div className="mt-6 rounded-2xl border border-slate-200 bg-slate-50 p-4">
                     <p className="text-xs leading-6 text-slate-500">
-                      This assessment should be stored as part of the company
-                      onboarding record and used to drive team recommendation
-                      logic after submission.
+                      This assessment now routes into the recommendation flow
+                      using real submitted values. The next production step is
+                      persisting these responses to your database during company
+                      onboarding.
                     </p>
                   </div>
                 </div>
@@ -454,9 +461,8 @@ export default function CompanyAssessmentPage() {
                       Built for smarter team rollout
                     </h3>
                     <p className="mt-1 text-sm leading-6 text-slate-600">
-                      This page is structured to support future recommendation
-                      logic, team onboarding, and category-based learning
-                      placement for companies.
+                      This page is now part of the real recommendation flow and
+                      is ready for persistence into company onboarding records.
                     </p>
                   </div>
                 </div>

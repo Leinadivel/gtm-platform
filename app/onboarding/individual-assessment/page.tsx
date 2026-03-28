@@ -24,7 +24,7 @@ const goalOptions = [
   "Strengthen communication with clients",
   "Prepare for a new sales role",
   "Grow into a leadership role",
-];
+] as const;
 
 const focusOptions = [
   "Sales",
@@ -33,7 +33,7 @@ const focusOptions = [
   "Communication",
   "Customer Success",
   "Leadership",
-];
+] as const;
 
 const experienceOptions = [
   "0–1 year",
@@ -41,7 +41,7 @@ const experienceOptions = [
   "3–5 years",
   "5–10 years",
   "10+ years",
-];
+] as const;
 
 const confidenceAreas = [
   "Prospecting and pipeline building",
@@ -50,7 +50,7 @@ const confidenceAreas = [
   "Negotiation and objection handling",
   "Professional communication",
   "Leadership and team collaboration",
-];
+] as const;
 
 const outcomes = [
   {
@@ -97,8 +97,8 @@ export default function IndividualAssessmentPage() {
 
               <p className="mt-6 max-w-2xl text-lg leading-8 text-slate-600">
                 Before you begin, answer a few short questions so Genim can
-                understand your experience, your goals, and the areas where you
-                want to grow most.
+                understand your experience, goals, and the areas where you want
+                to grow most.
               </p>
 
               <div className="mt-8 grid gap-3 sm:grid-cols-1 md:max-w-2xl">
@@ -106,15 +106,15 @@ export default function IndividualAssessmentPage() {
                   <CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0 text-emerald-600" />
                   <p className="text-sm leading-6 text-slate-700">
                     You will not be placed into a generic beginner path if you
-                    already have real experience.
+                    already have meaningful experience.
                   </p>
                 </div>
 
                 <div className="flex items-start gap-3 rounded-2xl border border-slate-200 bg-white p-4 shadow-sm">
                   <CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0 text-emerald-600" />
                   <p className="text-sm leading-6 text-slate-700">
-                    Your answers will help us suggest the most relevant category
-                    focus and first courses to start with.
+                    Your answers help Genim recommend the most relevant category
+                    focus and first courses to begin with.
                   </p>
                 </div>
 
@@ -203,7 +203,11 @@ export default function IndividualAssessmentPage() {
                 </div>
 
                 <div className="p-6 sm:p-8">
-                  <form className="space-y-8">
+                  <form
+                    action="/onboarding/individual-recommendation"
+                    method="GET"
+                    className="space-y-8"
+                  >
                     <section className="space-y-5">
                       <div>
                         <h3 className="text-lg font-semibold text-slate-950">
@@ -229,6 +233,7 @@ export default function IndividualAssessmentPage() {
                             id="currentRole"
                             name="currentRole"
                             type="text"
+                            autoComplete="organization-title"
                             placeholder="e.g. Sales Executive, Account Manager, Customer Success Associate"
                             className="w-full rounded-2xl border border-slate-300 bg-white py-3 pl-11 pr-4 text-sm outline-none transition placeholder:text-slate-400 focus:border-blue-500 focus:ring-4 focus:ring-blue-100"
                             required
@@ -251,6 +256,7 @@ export default function IndividualAssessmentPage() {
                             id="industry"
                             name="industry"
                             type="text"
+                            autoComplete="off"
                             placeholder="e.g. SaaS, Real Estate, Finance, Retail"
                             className="w-full rounded-2xl border border-slate-300 bg-white py-3 pl-11 pr-4 text-sm outline-none transition placeholder:text-slate-400 focus:border-blue-500 focus:ring-4 focus:ring-blue-100"
                             required
@@ -397,7 +403,7 @@ export default function IndividualAssessmentPage() {
                       <div className="flex items-start gap-3">
                         <BookOpen className="mt-0.5 h-4 w-4 shrink-0 text-blue-600" />
                         <p className="text-sm leading-6 text-slate-700">
-                          After submission, Genim can recommend a starting
+                          After submission, Genim will recommend a starting
                           category and 2 to 3 courses based on your answers.
                         </p>
                       </div>
@@ -423,9 +429,10 @@ export default function IndividualAssessmentPage() {
 
                   <div className="mt-6 rounded-2xl border border-slate-200 bg-slate-50 p-4">
                     <p className="text-xs leading-6 text-slate-500">
-                      This assessment helps improve course recommendations and
-                      starting placement. It should be stored as part of the
-                      user onboarding record after submission.
+                      This assessment now routes into the recommendation flow
+                      using real submitted values. The next production step is
+                      persisting these responses to your database during
+                      onboarding.
                     </p>
                   </div>
                 </div>
