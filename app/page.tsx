@@ -4,135 +4,201 @@ import SiteFooter from "@/components/site-footer";
 import {
   ArrowRight,
   BadgeCheck,
+  BarChart3,
+  BookOpen,
+  Bot,
   Briefcase,
   Building2,
   CheckCircle2,
-  Compass,
+  Clock3,
   GraduationCap,
-  Layers3,
+  MessageSquare,
   Rocket,
+  ShieldCheck,
   Sparkles,
   Target,
   Users,
 } from "lucide-react";
 
+const heroPoints = [
+  "Practical, in-demand sales and GTM learning",
+  "Structured for both individuals and companies",
+  "Built to improve performance, confidence, and execution",
+];
+
+const audienceCards = [
+  {
+    title: "For Individuals",
+    icon: <GraduationCap className="h-6 w-6" />,
+    accent: "blue" as const,
+    desc: "Build high-value sales and GTM capability through structured learning, assessments, and guided progress.",
+    bullets: [
+      "7-day free trial",
+      "Monthly, semi-annual, and annual plans",
+      "Progress-driven learning experience",
+    ],
+    href: "/register/individual",
+    cta: "Start as an individual",
+  },
+  {
+    title: "For Companies",
+    icon: <Building2 className="h-6 w-6" />,
+    accent: "orange" as const,
+    desc: "Enable your staff with a focused learning platform designed to strengthen sales capability across teams.",
+    bullets: [
+      "7-day company trial",
+      "Per-staff subscription model",
+      "Built for structured team learning",
+    ],
+    href: "/register/company",
+    cta: "Start as a company",
+  },
+];
+
+const valueCards = [
+  {
+    title: "AI-powered learning support",
+    icon: <Bot className="h-5 w-5" />,
+    desc: "A modern learning experience designed to make sales education more relevant, guided, and practical.",
+  },
+  {
+    title: "Built for performance",
+    icon: <Rocket className="h-5 w-5" />,
+    desc: "The platform is designed to help learners and teams improve confidence, execution, and sales effectiveness.",
+  },
+  {
+    title: "Structured for growth",
+    icon: <BarChart3 className="h-5 w-5" />,
+    desc: "Move from scattered learning into a clearer development path with measurable progression over time.",
+  },
+];
+
+const learningHighlights = [
+  {
+    title: "Sales foundations",
+    desc: "Develop a stronger understanding of the core principles behind effective selling and customer conversations.",
+    icon: <BookOpen className="h-5 w-5" />,
+  },
+  {
+    title: "Practical GTM understanding",
+    desc: "Go beyond theory and understand how sales, positioning, messaging, and execution connect in real business environments.",
+    icon: <Target className="h-5 w-5" />,
+  },
+  {
+    title: "Team enablement",
+    desc: "Support company learning across staff with a structure that makes capability-building more consistent and scalable.",
+    icon: <Users className="h-5 w-5" />,
+  },
+];
+
+const trustItems = [
+  "Subscription-based access for individuals and companies",
+  "Short-term and long-term plans for different learning needs",
+  "Designed for modern sales capability development",
+];
 
 export default function Home() {
   return (
-    <main className="min-h-screen bg-white text-gray-900">
+    <main className="min-h-screen bg-white text-slate-900">
       <SiteHeader />
-      <section className="relative overflow-hidden border-b border-gray-100">
+
+      <section className="relative overflow-hidden border-b border-slate-200">
         <div className="absolute inset-0 bg-gradient-to-br from-blue-50 via-white to-orange-50" />
-        <div className="absolute -left-20 top-24 h-72 w-72 rounded-full bg-blue-100/70 blur-3xl" />
+        <div className="absolute -left-20 top-20 h-72 w-72 rounded-full bg-blue-100/70 blur-3xl" />
         <div className="absolute -right-16 bottom-0 h-72 w-72 rounded-full bg-orange-100/60 blur-3xl" />
 
-        <div className="relative mx-auto max-w-7xl px-6 py-8 sm:py-10">
-          <div className="mt-16 grid items-center gap-10 lg:grid-cols-[1.15fr_0.85fr]">
+        <div className="relative mx-auto max-w-7xl px-6 py-10 sm:py-12">
+          <div className="mt-12 grid items-center gap-10 lg:grid-cols-[1.1fr_0.9fr]">
             <div className="max-w-4xl">
-              <div className="inline-flex items-center gap-2 rounded-full border border-blue-200 bg-white/90 px-3 py-1 text-xs font-semibold text-blue-700 shadow-sm">
+              <div className="inline-flex items-center gap-2 rounded-full border border-blue-200 bg-white/90 px-3 py-1.5 text-xs font-semibold text-blue-700 shadow-sm">
                 <BadgeCheck className="h-4 w-4" />
-                Practical GTM learning + real GTM execution
+                AI-powered sales education for individuals and companies
               </div>
 
-              <h2 className="mt-6 text-4xl font-bold leading-tight tracking-tight sm:text-6xl">
-                Build, learn, and execute{" "}
-                <span className="text-blue-600">Go-To-Market</span>{" "}
-                the right way.
-              </h2>
+              <h1 className="mt-6 text-4xl font-bold leading-tight tracking-tight sm:text-6xl">
+                Accelerate sales performance with smarter learning.
+              </h1>
 
-              <p className="mt-6 max-w-2xl text-lg leading-8 text-gray-600">
-                A complete platform where individuals master GTM engineering and
-                companies get structured GTM systems, strategy, and execution
-                support that actually moves growth forward.
+              <p className="mt-6 max-w-2xl text-lg leading-8 text-slate-600">
+                Genim is a subscription-based learning platform built to help
+                individuals and companies access practical, in-demand sales and
+                GTM skills through a modern, structured learning experience.
               </p>
 
               <div className="mt-8 flex flex-col gap-4 sm:flex-row">
                 <Link
-                  href="/geniusnimble"
+                  href="/register/individual"
                   className="inline-flex items-center justify-center gap-2 rounded-2xl bg-blue-600 px-6 py-3.5 font-semibold text-white shadow-sm transition hover:bg-blue-500"
                 >
-                  Learn GTM (GeniusNimble)
+                  Start free trial
                   <ArrowRight className="h-4 w-4" />
                 </Link>
 
                 <Link
-                  href="/askgenim"
-                  className="inline-flex items-center justify-center gap-2 rounded-2xl border border-gray-300 bg-white px-6 py-3.5 font-semibold text-gray-800 transition hover:bg-gray-50"
+                  href="/pricing"
+                  className="inline-flex items-center justify-center gap-2 rounded-2xl border border-slate-300 bg-white px-6 py-3.5 font-semibold text-slate-800 transition hover:bg-slate-50"
                 >
-                  Get GTM Done (AskGenim)
+                  View subscription plans
                   <ArrowRight className="h-4 w-4" />
                 </Link>
               </div>
 
-              <div className="mt-10 grid gap-3 sm:grid-cols-3">
-                <StatCard
-                  title="For learners"
-                  value="Hands-on"
-                  desc="Real-world GTM knowledge, not just theory."
-                  icon={<GraduationCap className="h-4 w-4" />}
-                  accent="blue"
-                />
-                <StatCard
-                  title="For startups"
-                  value="Structured"
-                  desc="Clear systems for planning and execution."
-                  icon={<Rocket className="h-4 w-4" />}
-                  accent="orange"
-                />
-                <StatCard
-                  title="For teams"
-                  value="Practical"
-                  desc="A bridge between education and outcomes."
-                  icon={<Users className="h-4 w-4" />}
-                  accent="blue"
-                />
+              <div className="mt-8 grid gap-3 sm:grid-cols-3">
+                {heroPoints.map((point) => (
+                  <div
+                    key={point}
+                    className="flex items-start gap-3 rounded-2xl border border-slate-200 bg-white p-4 shadow-sm"
+                  >
+                    <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-emerald-600" />
+                    <p className="text-sm text-slate-700">{point}</p>
+                  </div>
+                ))}
               </div>
             </div>
 
-            {/* HERO SIDE PANEL */}
             <div className="relative">
-              <div className="rounded-3xl border border-gray-200 bg-white/95 p-6 shadow-[0_20px_60px_rgba(0,0,0,0.08)] backdrop-blur">
+              <div className="rounded-3xl border border-slate-200 bg-white/95 p-6 shadow-[0_20px_60px_rgba(0,0,0,0.08)] backdrop-blur">
                 <div className="flex items-center justify-between">
                   <div>
-                    <p className="text-sm font-semibold text-gray-900">
-                      Why this platform stands out
+                    <p className="text-sm font-semibold text-slate-900">
+                      Why Genim works
                     </p>
-                    <p className="mt-1 text-xs text-gray-500">
-                      More than a course. More than a service.
+                    <p className="mt-1 text-xs text-slate-500">
+                      Built for real sales capability growth
                     </p>
                   </div>
-                  <span className="rounded-full bg-blue-50 px-3 py-1 text-xs font-semibold text-blue-700">
-                    GTM-first
+                  <span className="rounded-full bg-orange-50 px-3 py-1 text-xs font-semibold text-orange-600">
+                    Subscription-based
                   </span>
                 </div>
 
                 <div className="mt-6 space-y-4">
                   <FeaturePoint
-                    icon={<Compass className="h-4 w-4" />}
-                    title="Clear direction"
-                    desc="The platform gives people and companies a clearer path into modern GTM work."
+                    icon={<Sparkles className="h-4 w-4" />}
+                    title="Modern learning experience"
+                    desc="A cleaner, guided experience for building sales and GTM skill with more clarity and structure."
                   />
                   <FeaturePoint
-                    icon={<Layers3 className="h-4 w-4" />}
-                    title="Systems thinking"
-                    desc="Instead of random tactics, it focuses on repeatable systems and structured execution."
+                    icon={<Clock3 className="h-4 w-4" />}
+                    title="Flexible plan durations"
+                    desc="Structured plans for monthly, semi-annual, and annual learning journeys across different user needs."
                   />
                   <FeaturePoint
-                    icon={<Target className="h-4 w-4" />}
-                    title="Outcome driven"
-                    desc="Every part of the experience is designed around skill growth and business impact."
+                    icon={<ShieldCheck className="h-4 w-4" />}
+                    title="Built for individuals and teams"
+                    desc="The platform supports both personal development and company-wide staff enablement."
                   />
                 </div>
 
                 <div className="mt-6 rounded-2xl bg-gradient-to-r from-blue-600 to-blue-700 p-5 text-white">
                   <div className="flex items-center gap-2 text-sm font-semibold">
                     <Sparkles className="h-4 w-4" />
-                    One ecosystem, two paths
+                    7-day free trial available
                   </div>
                   <p className="mt-2 text-sm leading-6 text-white/85">
-                    Whether you want to learn GTM deeply or need GTM execution
-                    delivered for your company, the platform gives you a focused
-                    path forward.
+                    Start with a free trial, experience the platform properly,
+                    then move into the subscription plan that fits your
+                    learning or team needs.
                   </p>
                 </div>
               </div>
@@ -141,238 +207,186 @@ export default function Home() {
         </div>
       </section>
 
-      {/* TWO PATHS */}
       <section className="mx-auto max-w-7xl px-6 py-20">
         <div className="mb-10 max-w-3xl">
           <h2 className="text-3xl font-semibold tracking-tight">
-            Two focused paths for growth
+            Learning built for two clear paths
           </h2>
-          <p className="mt-4 text-base leading-7 text-gray-600">
-            The GTM Platform is designed around two strong directions. One helps
-            individuals become highly valuable in modern growth environments.
-            The other helps startups and companies implement GTM systems with
-            expert support.
+          <p className="mt-4 text-base leading-7 text-slate-600">
+            Genim is designed for both individual learners and companies that
+            want to build stronger sales capability across a team.
           </p>
         </div>
 
         <div className="grid gap-8 md:grid-cols-2">
-          {/* GeniusNimble */}
-          <div className="group rounded-3xl border border-gray-200 bg-white p-8 shadow-sm transition hover:-translate-y-1 hover:shadow-lg">
-            <div className="inline-flex rounded-2xl bg-blue-50 p-3 text-blue-600">
-              <GraduationCap className="h-6 w-6" />
-            </div>
-
-            <h3 className="mt-5 text-2xl font-semibold text-blue-600">
-              GeniusNimble
-            </h3>
-
-            <p className="mt-4 text-base leading-7 text-gray-600">
-              Learn GTM engineering, build practical capability, and position
-              yourself for opportunities inside modern growth teams. This path
-              is built for people who want a deeper, more useful understanding
-              of GTM systems and execution.
-            </p>
-
-            <div className="mt-6 grid gap-3">
-              <ListItem text="Structured learning experience" />
-              <ListItem text="Practical GTM systems and workflows" />
-              <ListItem text="Applied knowledge, not surface-level theory" />
-              <ListItem text="Recruitment and opportunity pathway" />
-            </div>
-
-            <div className="mt-8 flex items-center justify-between rounded-2xl bg-gray-50 p-4">
-              <div>
-                <p className="text-sm font-semibold text-gray-900">Best for</p>
-                <p className="mt-1 text-sm text-gray-600">
-                  Learners, operators, aspiring GTM talent
-                </p>
-              </div>
-              <Link
-                href="/geniusnimble"
-                className="inline-flex items-center gap-2 font-semibold text-blue-600 transition group-hover:translate-x-1"
-              >
-                Explore
-                <ArrowRight className="h-4 w-4" />
-              </Link>
-            </div>
-          </div>
-
-          {/* AskGenim */}
-          <div className="group rounded-3xl border border-gray-200 bg-white p-8 shadow-sm transition hover:-translate-y-1 hover:shadow-lg">
-            <div className="inline-flex rounded-2xl bg-orange-50 p-3 text-orange-500">
-              <Briefcase className="h-6 w-6" />
-            </div>
-
-            <h3 className="mt-5 text-2xl font-semibold text-orange-500">
-              AskGenim
-            </h3>
-
-            <p className="mt-4 text-base leading-7 text-gray-600">
-              We help startups and companies plan, launch, and execute GTM
-              strategies with real structure. This is for teams that do not just
-              need ideas, but want practical GTM support, systems, and
-              execution that can move the business forward.
-            </p>
-
-            <div className="mt-6 grid gap-3">
-              <ListItem text="GTM consulting and advisory" />
-              <ListItem text="Execution support with structure" />
-              <ListItem text="Startup growth systems and workflows" />
-              <ListItem text="Strategy translated into action" />
-            </div>
-
-            <div className="mt-8 flex items-center justify-between rounded-2xl bg-gray-50 p-4">
-              <div>
-                <p className="text-sm font-semibold text-gray-900">Best for</p>
-                <p className="mt-1 text-sm text-gray-600">
-                  Founders, growth teams, startups, operators
-                </p>
-              </div>
-              <Link
-                href="/askgenim"
-                className="inline-flex items-center gap-2 font-semibold text-orange-500 transition group-hover:translate-x-1"
-              >
-                Explore
-                <ArrowRight className="h-4 w-4" />
-              </Link>
-            </div>
-          </div>
+          {audienceCards.map((card) => (
+            <AudienceCard
+              key={card.title}
+              title={card.title}
+              icon={card.icon}
+              accent={card.accent}
+              desc={card.desc}
+              bullets={card.bullets}
+              href={card.href}
+              cta={card.cta}
+            />
+          ))}
         </div>
       </section>
 
-      {/* VALUE SECTION */}
-      <section className="bg-gray-50 py-20">
+      <section className="bg-slate-50 py-20">
         <div className="mx-auto max-w-6xl px-6">
           <div className="mx-auto max-w-3xl text-center">
             <h2 className="text-3xl font-semibold tracking-tight">
-              One platform. Two powerful outcomes.
+              A smarter way to build sales capability
             </h2>
 
-            <p className="mt-4 text-base leading-7 text-gray-600">
-              Learn GTM skills and deploy them in real-world business scenarios.
-              The platform connects education, talent development, and execution
-              into one practical system built for modern growth work.
+            <p className="mt-4 text-base leading-7 text-slate-600">
+              The platform is structured to help learners and teams move beyond
+              surface-level knowledge into more useful, practical sales and GTM
+              understanding.
             </p>
           </div>
 
           <div className="mt-12 grid gap-6 md:grid-cols-3">
-            <ValueCard
-              icon={<Building2 className="h-5 w-5" />}
-              title="Built for modern companies"
-              desc="The platform reflects the real needs of startups and growth teams that need clearer GTM systems."
-            />
-            <ValueCard
-              icon={<Users className="h-5 w-5" />}
-              title="Built for modern talent"
-              desc="Learners gain more than information. They gain practical GTM understanding that can translate into opportunity."
-            />
-            <ValueCard
-              icon={<Rocket className="h-5 w-5" />}
-              title="Built for real execution"
-              desc="Everything is oriented toward useful outcomes, whether that is learning, hiring, planning, or shipping GTM work."
-            />
+            {valueCards.map((item) => (
+              <ValueCard
+                key={item.title}
+                icon={item.icon}
+                title={item.title}
+                desc={item.desc}
+              />
+            ))}
           </div>
         </div>
       </section>
 
-      {/* PROCESS / DIRECTIONS */}
       <section className="mx-auto max-w-7xl px-6 py-20">
         <div className="mb-10 max-w-3xl">
           <h2 className="text-3xl font-semibold tracking-tight">
-            Clear directions for different kinds of users
+            What learners and teams can expect
           </h2>
-          <p className="mt-4 text-base leading-7 text-gray-600">
-            Not everyone comes to the platform for the same reason. Some want to
-            grow their skills. Some want to solve business growth challenges.
-            This page now makes those directions more obvious so users can
-            understand exactly where to go next.
+          <p className="mt-4 text-base leading-7 text-slate-600">
+            Genim is being positioned as more than a course website. It is a
+            platform for practical development, stronger performance, and
+            subscription-based learning access.
           </p>
         </div>
 
         <div className="grid gap-6 lg:grid-cols-3">
-          <DirectionCard
-            title="If you want to learn"
-            desc="Choose GeniusNimble to build GTM capability, sharpen your practical understanding, and prepare for real roles and projects."
-            accent="blue"
-          />
-          <DirectionCard
-            title="If you need execution"
-            desc="Choose AskGenim if your company needs GTM thinking, systems, and hands-on support to move from plan to progress."
-            accent="orange"
-          />
-          <DirectionCard
-            title="If you want both"
-            desc="The platform is positioned to connect learning and execution, making it useful for talent, teams, and businesses alike."
-            accent="blue"
-          />
+          {learningHighlights.map((item) => (
+            <HighlightCard
+              key={item.title}
+              icon={item.icon}
+              title={item.title}
+              desc={item.desc}
+            />
+          ))}
         </div>
       </section>
 
-      {/* CTA */}
-      <section className="py-20">
-        <div className="mx-auto max-w-5xl px-6">
-          <div className="rounded-3xl bg-gradient-to-r from-blue-600 to-blue-700 px-8 py-12 text-center text-white shadow-lg">
-            <h2 className="text-3xl font-semibold tracking-tight">
-              Ready to start your GTM journey?
-            </h2>
+      <section className="bg-slate-50 py-20">
+        <div className="mx-auto max-w-6xl px-6">
+          <div className="grid gap-6 lg:grid-cols-[0.95fr_1.05fr]">
+            <div>
+              <h2 className="text-3xl font-semibold tracking-tight">
+                Subscription plans designed around real usage
+              </h2>
+              <p className="mt-4 text-base leading-7 text-slate-600">
+                Individual learners and companies have different needs, so the
+                platform supports different subscription structures for both.
+              </p>
+            </div>
 
-            <p className="mx-auto mt-4 max-w-2xl text-base leading-7 text-blue-100">
-              Whether you want to learn GTM deeply or work with a team that can
-              help you execute GTM more effectively, the next step is clear.
-            </p>
+            <div className="space-y-4">
+              {trustItems.map((item) => (
+                <div
+                  key={item}
+                  className="flex items-start gap-3 rounded-2xl border border-slate-200 bg-white p-4 shadow-sm"
+                >
+                  <CheckCircle2 className="mt-0.5 h-5 w-5 text-blue-600" />
+                  <p className="text-sm text-slate-700">{item}</p>
+                </div>
+              ))}
+            </div>
+          </div>
 
-            <div className="mt-8 flex flex-col justify-center gap-4 sm:flex-row">
+          <div className="mt-10 grid gap-6 md:grid-cols-2">
+            <div className="rounded-3xl border border-slate-200 bg-white p-8 shadow-sm">
+              <div className="inline-flex rounded-2xl bg-blue-50 p-3 text-blue-600">
+                <GraduationCap className="h-6 w-6" />
+              </div>
+              <h3 className="mt-5 text-2xl font-semibold">Individual pricing</h3>
+              <p className="mt-4 text-sm leading-7 text-slate-600">
+                Includes a 7-day free trial, monthly access, and longer-duration
+                plans for learners who want stronger value over time.
+              </p>
               <Link
-                href="/geniusnimble"
-                className="inline-flex items-center justify-center gap-2 rounded-2xl bg-white px-6 py-3 font-semibold text-blue-700 transition hover:bg-blue-50"
+                href="/pricing"
+                className="mt-8 inline-flex items-center gap-2 font-semibold text-blue-600"
               >
-                Start Learning
+                See individual plans
                 <ArrowRight className="h-4 w-4" />
               </Link>
+            </div>
 
+            <div className="rounded-3xl border border-slate-200 bg-white p-8 shadow-sm">
+              <div className="inline-flex rounded-2xl bg-orange-50 p-3 text-orange-500">
+                <Building2 className="h-6 w-6" />
+              </div>
+              <h3 className="mt-5 text-2xl font-semibold">Company pricing</h3>
+              <p className="mt-4 text-sm leading-7 text-slate-600">
+                Includes a 7-day free trial and per-staff subscription plans for
+                companies that want structured team learning access.
+              </p>
               <Link
-                href="/askgenim"
-                className="inline-flex items-center justify-center gap-2 rounded-2xl bg-orange-500 px-6 py-3 font-semibold text-white transition hover:bg-orange-400"
+                href="/pricing"
+                className="mt-8 inline-flex items-center gap-2 font-semibold text-orange-500"
               >
-                Work With Us
+                See company plans
                 <ArrowRight className="h-4 w-4" />
               </Link>
             </div>
           </div>
         </div>
       </section>
+
+      <section className="py-20">
+        <div className="mx-auto max-w-5xl px-6">
+          <div className="rounded-3xl bg-gradient-to-r from-blue-600 to-blue-700 px-8 py-12 text-center text-white shadow-lg">
+            <h2 className="text-3xl font-semibold tracking-tight">
+              Start with Genim and build real sales capability.
+            </h2>
+
+            <p className="mx-auto mt-4 max-w-2xl text-base leading-7 text-blue-100">
+              Whether you are learning individually or enabling your team, the
+              platform is designed to help you start quickly and grow with
+              structure.
+            </p>
+
+            <div className="mt-8 flex flex-col justify-center gap-4 sm:flex-row">
+              <Link
+                href="/register/individual"
+                className="inline-flex items-center justify-center gap-2 rounded-2xl bg-white px-6 py-3 font-semibold text-blue-700 transition hover:bg-blue-50"
+              >
+                Start Individual Trial
+                <ArrowRight className="h-4 w-4" />
+              </Link>
+
+              <Link
+                href="/register/company"
+                className="inline-flex items-center justify-center gap-2 rounded-2xl bg-orange-500 px-6 py-3 font-semibold text-white transition hover:bg-orange-400"
+              >
+                Start Company Trial
+                <ArrowRight className="h-4 w-4" />
+              </Link>
+            </div>
+          </div>
+        </div>
+      </section>
+
       <SiteFooter />
     </main>
-  );
-}
-
-function StatCard({
-  title,
-  value,
-  desc,
-  icon,
-  accent,
-}: {
-  title: string;
-  value: string;
-  desc: string;
-  icon: React.ReactNode;
-  accent: "blue" | "orange";
-}) {
-  const accentClass =
-    accent === "orange"
-      ? "bg-orange-50 text-orange-600"
-      : "bg-blue-50 text-blue-600";
-
-  return (
-    <div className="rounded-2xl border border-gray-200 bg-white p-4 shadow-sm">
-      <div className="flex items-center gap-2">
-        <span className={`inline-flex rounded-xl p-2 ${accentClass}`}>{icon}</span>
-        <p className="text-xs font-medium text-gray-500">{title}</p>
-      </div>
-      <p className="mt-3 text-lg font-semibold text-gray-900">{value}</p>
-      <p className="mt-1 text-xs leading-5 text-gray-600">{desc}</p>
-    </div>
   );
 }
 
@@ -386,23 +400,72 @@ function FeaturePoint({
   desc: string;
 }) {
   return (
-    <div className="flex items-start gap-3 rounded-2xl border border-gray-100 bg-gray-50 p-4">
+    <div className="flex items-start gap-3 rounded-2xl border border-slate-100 bg-slate-50 p-4">
       <span className="inline-flex rounded-xl bg-blue-50 p-2 text-blue-600">
         {icon}
       </span>
       <div>
-        <p className="text-sm font-semibold text-gray-900">{title}</p>
-        <p className="mt-1 text-xs leading-5 text-gray-600">{desc}</p>
+        <p className="text-sm font-semibold text-slate-900">{title}</p>
+        <p className="mt-1 text-xs leading-5 text-slate-600">{desc}</p>
       </div>
     </div>
   );
 }
 
-function ListItem({ text }: { text: string }) {
+function AudienceCard({
+  title,
+  icon,
+  accent,
+  desc,
+  bullets,
+  href,
+  cta,
+}: {
+  title: string;
+  icon: React.ReactNode;
+  accent: "blue" | "orange";
+  desc: string;
+  bullets: string[];
+  href: string;
+  cta: string;
+}) {
+  const accentWrap =
+    accent === "orange"
+      ? "bg-orange-50 text-orange-500"
+      : "bg-blue-50 text-blue-600";
+
+  const accentText = accent === "orange" ? "text-orange-500" : "text-blue-600";
+
   return (
-    <div className="flex items-start gap-3">
-      <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-green-600" />
-      <span className="text-sm text-gray-700">{text}</span>
+    <div className="group rounded-3xl border border-slate-200 bg-white p-8 shadow-sm transition hover:-translate-y-1 hover:shadow-lg">
+      <div className={`inline-flex rounded-2xl p-3 ${accentWrap}`}>{icon}</div>
+
+      <h3 className={`mt-5 text-2xl font-semibold ${accentText}`}>{title}</h3>
+
+      <p className="mt-4 text-base leading-7 text-slate-600">{desc}</p>
+
+      <div className="mt-6 grid gap-3">
+        {bullets.map((item) => (
+          <div key={item} className="flex items-start gap-3">
+            <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-emerald-600" />
+            <span className="text-sm text-slate-700">{item}</span>
+          </div>
+        ))}
+      </div>
+
+      <div className="mt-8 flex items-center justify-between rounded-2xl bg-slate-50 p-4">
+        <div>
+          <p className="text-sm font-semibold text-slate-900">Best for</p>
+          <p className="mt-1 text-sm text-slate-600">{title}</p>
+        </div>
+        <Link
+          href={href}
+          className={`inline-flex items-center gap-2 font-semibold transition group-hover:translate-x-1 ${accentText}`}
+        >
+          {cta}
+          <ArrowRight className="h-4 w-4" />
+        </Link>
+      </div>
     </div>
   );
 }
@@ -417,38 +480,32 @@ function ValueCard({
   desc: string;
 }) {
   return (
-    <div className="rounded-3xl border border-gray-200 bg-white p-6 shadow-sm">
-      <span className="inline-flex rounded-2xl bg-white p-3 text-blue-600 shadow-sm ring-1 ring-gray-100">
+    <div className="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
+      <span className="inline-flex rounded-2xl bg-white p-3 text-blue-600 shadow-sm ring-1 ring-slate-100">
         {icon}
       </span>
-      <h3 className="mt-5 text-lg font-semibold text-gray-900">{title}</h3>
-      <p className="mt-3 text-sm leading-7 text-gray-600">{desc}</p>
+      <h3 className="mt-5 text-lg font-semibold text-slate-900">{title}</h3>
+      <p className="mt-3 text-sm leading-7 text-slate-600">{desc}</p>
     </div>
   );
 }
 
-function DirectionCard({
+function HighlightCard({
+  icon,
   title,
   desc,
-  accent,
 }: {
+  icon: React.ReactNode;
   title: string;
   desc: string;
-  accent: "blue" | "orange";
 }) {
-  const titleClass = accent === "orange" ? "text-orange-500" : "text-blue-600";
-  const badgeClass =
-    accent === "orange"
-      ? "bg-orange-50 text-orange-600"
-      : "bg-blue-50 text-blue-600";
-
   return (
-    <div className="rounded-3xl border border-gray-200 bg-white p-6 shadow-sm">
-      <span className={`inline-flex rounded-full px-3 py-1 text-xs font-semibold ${badgeClass}`}>
-        Path
+    <div className="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
+      <span className="inline-flex rounded-2xl bg-blue-50 p-3 text-blue-600">
+        {icon}
       </span>
-      <h3 className={`mt-4 text-xl font-semibold ${titleClass}`}>{title}</h3>
-      <p className="mt-3 text-sm leading-7 text-gray-600">{desc}</p>
+      <h3 className="mt-5 text-lg font-semibold text-slate-900">{title}</h3>
+      <p className="mt-3 text-sm leading-7 text-slate-600">{desc}</p>
     </div>
   );
 }
