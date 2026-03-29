@@ -1,6 +1,8 @@
 import Link from "next/link";
 import { redirect } from "next/navigation";
+import { headers } from "next/headers";
 import SiteHeader from "@/components/site-header";
+import { createClient } from "@/lib/supabase/server";
 import {
   ArrowRight,
   BadgeCheck,
@@ -14,6 +16,7 @@ import {
   Target,
   TrendingUp,
   UserRound,
+  AlertCircle,
 } from "lucide-react";
 
 const benefits = [
@@ -108,6 +111,15 @@ function normalizePlanValue(
   return VALID_PLANS.has(plan as PlanKey) ? (plan as PlanKey) : null;
 }
 
+function buildRedirectUrl(
+  pathname: string,
+  plan: PlanKey,
+  params: Record<string, string>,
+) {
+  const search = new URLSearchParams({ plan, ...params });
+  return `${pathname}?${search.toString()}`;
+}
+
 export default async function RegisterIndividualPage({
   searchParams,
 }: {
@@ -115,12 +127,99 @@ export default async function RegisterIndividualPage({
 }) {
   const resolvedSearchParams = await searchParams;
   const selectedPlan = normalizePlanValue(resolvedSearchParams.plan);
+  const errorMessage =
+    typeof resolvedSearchParams.error === "string"
+      ? resolvedSearchParams.error
+      : "";
+  const successMessage =
+    typeof resolvedSearchParams.success === "string"
+      ? resolvedSearchParams.success
+      : "";
 
   if (!selectedPlan) {
     redirect("/pricing");
   }
 
   const selectedPlanInfo = selectedPlanContent[selectedPlan];
+
+  async function signUpAction(formData: FormData) {
+    "use server";
+
+    const plan = normalizePlanValue(formData.get("plan")?.toString());
+    if (!plan) {
+      redirect("/pricing");
+    }
+
+    const fullName = formData.get("fullName")?.toString().trim() ?? "";
+    const email = formData.get("email")?.toString().trim().toLowerCase() ?? "";
+    const password = formData.get("password")?.toString() ?? "";
+    const confirmPassword = formData.get("confirmPassword")?.toString() ?? "";
+
+    if (!fullName || !email || !password || !confirmPassword) {
+      redirect(
+        buildRedirectUrl("/register/individual", plan, {
+          error: "Please complete all required fields.",
+        }),
+      );
+    }
+
+    if (password !== confirmPassword) {
+      redirect(
+        buildRedirectUrl("/register/individual", plan, {
+          error: "Passwords do not match.",
+        }),
+      );
+    }
+
+    if (password.length < 8) {
+      redirect(
+        buildRedirectUrl("/register/individual", plan, {
+          error: "Password must be at least 8 characters long.",
+        }),
+      );
+    }
+
+    const supabase = await createClient();
+    const requestHeaders = await headers();
+    const origin =
+      requestHeaders.get("origin") ??
+      process.env.NEXT_PUBLIC_SITE_URL ??
+      "http://localhost:3000";
+
+    const { data, error } = await supabase.auth.signUp({
+      email,
+      password,
+      options: {
+        emailRedirectTo: `${origin}/auth/callback`,
+        data: {
+          full_name: fullName,
+          role: "individual",
+          selected_plan: plan,
+        },
+      },
+    });
+
+    if (error) {
+      redirect(
+        buildRedirectUrl("/register/individual", plan, {
+          error: error.message,
+        }),
+      );
+    }
+
+    const hasSession = Boolean(data.session);
+
+    if (hasSession) {
+      redirect("/onboarding/individual-assessment");
+    }
+
+    redirect(
+      buildRedirectUrl("/register/individual", plan, {
+        success:
+          "Account created. Check your email to confirm your account before signing in.",
+      }),
+    );
+  }
 
   return (
     <main className="min-h-screen bg-white text-slate-900">
@@ -297,7 +396,29 @@ export default async function RegisterIndividualPage({
                 </div>
 
                 <div className="p-6 sm:p-8">
-                  <form className="space-y-5">
+                  {errorMessage ? (
+                    <div className="mb-5 rounded-2xl border border-red-200 bg-red-50 p-4">
+                      <div className="flex items-start gap-3">
+                        <AlertCircle className="mt-0.5 h-4 w-4 shrink-0 text-red-600" />
+                        <p className="text-sm leading-6 text-red-700">
+                          {errorMessage}
+                        </p>
+                      </div>
+                    </div>
+                  ) : null}
+
+                  {successMessage ? (
+                    <div className="mb-5 rounded-2xl border border-emerald-200 bg-emerald-50 p-4">
+                      <div className="flex items-start gap-3">
+                        <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-emerald-600" />
+                        <p className="text-sm leading-6 text-emerald-700">
+                          {successMessage}
+                        </p>
+                      </div>
+                    </div>
+                  ) : null}
+
+                  <form action={signUpAction} className="space-y-5">
                     <div>
                       <label
                         htmlFor="fullName"
@@ -353,6 +474,7 @@ export default async function RegisterIndividualPage({
                         autoComplete="new-password"
                         placeholder="Create a password"
                         className="w-full rounded-2xl border border-slate-300 bg-white px-4 py-3 text-sm outline-none transition placeholder:text-slate-400 focus:border-blue-500 focus:ring-4 focus:ring-blue-100"
+                        minLength={8}
                         required
                       />
                     </div>
@@ -371,6 +493,7 @@ export default async function RegisterIndividualPage({
                         autoComplete="new-password"
                         placeholder="Confirm your password"
                         className="w-full rounded-2xl border border-slate-300 bg-white px-4 py-3 text-sm outline-none transition placeholder:text-slate-400 focus:border-blue-500 focus:ring-4 focus:ring-blue-100"
+                        minLength={8}
                         required
                       />
                     </div>
@@ -441,8 +564,8 @@ export default async function RegisterIndividualPage({
                       <span className="font-semibold text-slate-700">
                         {selectedPlanInfo.label}
                       </span>
-                      . Payment and subscription activation can be connected in
-                      the next step without changing this page structure.
+                      . After account creation, the next step is payment and
+                      onboarding.
                     </p>
                   </div>
                 </div>

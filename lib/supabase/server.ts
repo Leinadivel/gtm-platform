@@ -20,15 +20,9 @@ export async function createClient() {
       getAll() {
         return cookieStore.getAll();
       },
-      setAll(cookiesToSet) {
-        try {
-          cookiesToSet.forEach(({ name, value, options }) => {
-            cookieStore.set(name, value, options);
-          });
-        } catch {
-          // Called from a Server Component where setting cookies is not allowed.
-          // Middleware should refresh auth cookies when needed.
-        }
+      setAll() {
+        // No-op in Server Components.
+        // Auth cookie refresh/write is handled by proxy.ts.
       },
     },
   });
