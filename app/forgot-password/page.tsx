@@ -1,9 +1,73 @@
 import Link from "next/link";
-import { ArrowRight, KeyRound, Mail, ShieldCheck } from "lucide-react";
+import { headers } from "next/headers";
+import { redirect } from "next/navigation";
+import { ArrowRight, KeyRound, Mail, ShieldCheck, AlertCircle, CheckCircle2 } from "lucide-react";
 import SiteHeader from "@/components/site-header";
 import SiteFooter from "@/components/site-footer";
+import { createClient } from "@/lib/supabase/server";
 
-export default function ForgotPasswordPage() {
+function buildRedirectUrl(pathname: string, params: Record<string, string>) {
+  const search = new URLSearchParams(params);
+  return `${pathname}?${search.toString()}`;
+}
+
+export default async function ForgotPasswordPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
+}) {
+  const resolvedSearchParams = await searchParams;
+
+  const errorMessage =
+    typeof resolvedSearchParams.error === "string"
+      ? resolvedSearchParams.error
+      : "";
+
+  const successMessage =
+    typeof resolvedSearchParams.success === "string"
+      ? resolvedSearchParams.success
+      : "";
+
+  async function requestPasswordResetAction(formData: FormData) {
+    "use server";
+
+    const email = formData.get("email")?.toString().trim().toLowerCase() ?? "";
+
+    if (!email) {
+      redirect(
+        buildRedirectUrl("/forgot-password", {
+          error: "Please enter the email address linked to your account.",
+        }),
+      );
+    }
+
+    const supabase = await createClient();
+    const requestHeaders = await headers();
+    const origin =
+      requestHeaders.get("origin") ??
+      process.env.NEXT_PUBLIC_SITE_URL ??
+      "http://localhost:3000";
+
+    const { error } = await supabase.auth.resetPasswordForEmail(email, {
+      redirectTo: `${origin}/reset-password`,
+    });
+
+    if (error) {
+      redirect(
+        buildRedirectUrl("/forgot-password", {
+          error: error.message,
+        }),
+      );
+    }
+
+    redirect(
+      buildRedirectUrl("/forgot-password", {
+        success:
+          "If an account exists for that email, a password reset link has been sent.",
+      }),
+    );
+  }
+
   return (
     <main className="min-h-screen bg-white text-slate-900">
       <SiteHeader showBackHome />
@@ -25,7 +89,7 @@ export default function ForgotPasswordPage() {
             <p className="mt-6 max-w-xl text-lg leading-8 text-slate-600">
               Enter the email address linked to your account and we’ll send you
               a secure password reset link so you can continue your learning,
-              team management, or GTM workflow.
+              team management, or role-based access on Genim.
             </p>
 
             <div className="mt-10 space-y-4">
@@ -70,7 +134,29 @@ export default function ForgotPasswordPage() {
                 </p>
               </div>
 
-              <form className="space-y-5">
+              {errorMessage ? (
+                <div className="mb-5 rounded-2xl border border-red-200 bg-red-50 p-4">
+                  <div className="flex items-start gap-3">
+                    <AlertCircle className="mt-0.5 h-4 w-4 shrink-0 text-red-600" />
+                    <p className="text-sm leading-6 text-red-700">
+                      {errorMessage}
+                    </p>
+                  </div>
+                </div>
+              ) : null}
+
+              {successMessage ? (
+                <div className="mb-5 rounded-2xl border border-emerald-200 bg-emerald-50 p-4">
+                  <div className="flex items-start gap-3">
+                    <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-emerald-600" />
+                    <p className="text-sm leading-6 text-emerald-700">
+                      {successMessage}
+                    </p>
+                  </div>
+                </div>
+              ) : null}
+
+              <form action={requestPasswordResetAction} className="space-y-5">
                 <div>
                   <label
                     htmlFor="email"
@@ -80,14 +166,17 @@ export default function ForgotPasswordPage() {
                   </label>
                   <input
                     id="email"
+                    name="email"
                     type="email"
+                    autoComplete="email"
                     placeholder="Enter your email address"
                     className="w-full rounded-xl border border-slate-300 px-4 py-3 outline-none transition focus:border-blue-500 focus:ring-4 focus:ring-blue-100"
+                    required
                   />
                 </div>
 
                 <button
-                  type="button"
+                  type="submit"
                   className="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-slate-900 px-6 py-3 font-semibold text-white transition hover:bg-slate-800"
                 >
                   Send reset link
