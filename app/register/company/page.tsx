@@ -185,6 +185,7 @@ export default async function RegisterCompanyPage({
           full_name: fullName,
           company_name: companyName,
           role: "company",
+          account_type: "company",
           selected_plan: plan,
         },
       },

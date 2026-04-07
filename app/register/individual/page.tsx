@@ -194,6 +194,7 @@ export default async function RegisterIndividualPage({
         data: {
           full_name: fullName,
           role: "individual",
+          account_type: "individual",
           selected_plan: plan,
         },
       },

@@ -19,6 +19,100 @@ function buildLoginRedirectUrl(
   return `${pathname}?${search.toString()}`;
 }
 
+async function resolvePostLoginDestination(
+  supabase: Awaited<ReturnType<typeof createClient>>,
+  user: {
+    id: string;
+    user_metadata?: {
+      role?: string;
+      account_type?: string;
+    };
+  },
+  next: string,
+) {
+  const accountType =
+    typeof user.user_metadata?.account_type === "string"
+      ? user.user_metadata.account_type
+      : typeof user.user_metadata?.role === "string"
+        ? user.user_metadata.role
+        : "individual";
+
+  if (accountType === "company") {
+    const { data: membership, error: membershipError } = await supabase
+      .from("company_members")
+      .select("company_id")
+      .eq("user_id", user.id)
+      .limit(1)
+      .maybeSingle();
+
+    if (membershipError) {
+      redirect(
+        buildLoginRedirectUrl("/login", {
+          error: membershipError.message,
+        }),
+      );
+    }
+
+    if (!membership?.company_id) {
+      return "/onboarding/company-assessment";
+    }
+
+    const { data: companyAssessment, error: companyAssessmentError } =
+      await supabase
+        .from("company_assessments")
+        .select("id")
+        .eq("company_id", membership.company_id)
+        .eq("status", "completed")
+        .limit(1)
+        .maybeSingle();
+
+    if (companyAssessmentError) {
+      redirect(
+        buildLoginRedirectUrl("/login", {
+          error: companyAssessmentError.message,
+        }),
+      );
+    }
+
+    if (!companyAssessment) {
+      return "/onboarding/company-assessment";
+    }
+
+    if (next) {
+      return next;
+    }
+
+    return "/company/dashboard";
+  }
+
+  const { data: individualAssessment, error: individualAssessmentError } =
+    await supabase
+      .from("individual_assessments")
+      .select("id")
+      .eq("user_id", user.id)
+      .eq("status", "completed")
+      .limit(1)
+      .maybeSingle();
+
+  if (individualAssessmentError) {
+    redirect(
+      buildLoginRedirectUrl("/login", {
+        error: individualAssessmentError.message,
+      }),
+    );
+  }
+
+  if (!individualAssessment) {
+    return "/onboarding/individual-assessment";
+  }
+
+  if (next) {
+    return next;
+  }
+
+  return "/dashboard";
+}
+
 export default async function LoginPage({
   searchParams,
 }: {
@@ -48,7 +142,8 @@ export default async function LoginPage({
     const email = formData.get("email")?.toString().trim().toLowerCase() ?? "";
     const password = formData.get("password")?.toString() ?? "";
     const next =
-      formData.get("next")?.toString().trim() && formData.get("next")?.toString().startsWith("/")
+      formData.get("next")?.toString().trim() &&
+      formData.get("next")?.toString().startsWith("/")
         ? (formData.get("next")?.toString().trim() as string)
         : "";
 
@@ -77,21 +172,22 @@ export default async function LoginPage({
       );
     }
 
-    const user = data.user;
-    const userRole =
-      typeof user?.user_metadata?.role === "string"
-        ? user.user_metadata.role
-        : "individual";
-
-    if (next) {
-      redirect(next);
+    if (!data.user) {
+      redirect(
+        buildLoginRedirectUrl("/login", {
+          error: "Unable to resolve authenticated user.",
+          ...(next ? { next } : {}),
+        }),
+      );
     }
 
-    if (userRole === "company") {
-      redirect("/company/dashboard");
-    }
+    const destination = await resolvePostLoginDestination(
+      supabase,
+      data.user,
+      next,
+    );
 
-    redirect("/dashboard");
+    redirect(destination);
   }
 
   return (
